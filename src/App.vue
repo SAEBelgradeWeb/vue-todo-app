@@ -8,35 +8,35 @@ export default {
   },
   computed: {
     activeTodos() {
-      return this.todos.filter(todo => ! todo.completed)
+      return this.todos.filter((todo) => !todo.completed)
     },
 
     completedTodos() {
-      return this.todos.filter(todo => todo.completed)
-    }
+      return this.todos.filter((todo) => todo.completed)
+    },
   },
   methods: {
-    addNewTodo(){
-      if (!this.newTodo) return;
+    addNewTodo() {
+      if (!this.newTodo) return
 
       this.todos.push({
         title: this.newTodo,
-        completed: false
+        completed: false,
       })
 
       this.newTodo = ''
     },
 
-    deleteTodo(todo){
-      let position = this.todos.indexOf(todo);
+    deleteTodo(todo) {
+      let position = this.todos.indexOf(todo)
 
       this.todos.splice(position, 1)
     },
 
-    clearCompleted(){
+    clearCompleted() {
       this.todos = this.activeTodos
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -55,11 +55,17 @@ export default {
 
     <section class="mt-10 text-left">
       <ul class="flex flex-col gap-4">
-        <li v-for="(todo, index) in todos" :key="index" class="bg-white rounded-sm py-2 px-3 text-sm text-neutral-800">
+        <li
+          v-for="(todo, index) in todos"
+          :key="index"
+          class="bg-white rounded-sm py-2 px-3 text-sm text-neutral-800"
+        >
           <div class="flex justify-between">
-            <div class="flex gap-2 flex-1 cursor-pointer" @click="todo.completed = ! todo.completed">
-              <input type="checkbox" v-model="todo.completed">
-              <span :class="todo.completed && 'line-through text-neutral-500'">{{ todo.title }}</span>
+            <div class="flex gap-2 flex-1 cursor-pointer" @click="todo.completed = !todo.completed">
+              <input type="checkbox" v-model="todo.completed" />
+              <span :class="todo.completed && 'line-through text-neutral-500'">{{
+                todo.title
+              }}</span>
             </div>
 
             <button @click="deleteTodo(todo)" class="cursor-pointer text-red-500">
@@ -80,11 +86,13 @@ export default {
     </section>
 
     <footer class="text-white mt-5">
-      <hr class="text-neutral-500">
+      <hr class="text-neutral-500" />
       <div class="flex justify-between text-sm pt-2">
         <span>{{ activeTodos.length }} todos left</span>
 
-        <button @click="clearCompleted" class="cursor-pointer hover:underline">Clear completed</button>
+        <button @click="clearCompleted" class="cursor-pointer hover:underline">
+          Clear completed
+        </button>
       </div>
     </footer>
   </div>
