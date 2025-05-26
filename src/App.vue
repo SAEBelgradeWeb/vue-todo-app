@@ -4,11 +4,25 @@ export default {
     return {
       newTodo: '',
       todos: [],
+      currentFilter: 'all',
+      filters: ['all', 'completed', 'active'],
     }
   },
   computed: {
     activeTodos() {
       return this.todos.filter((todo) => !todo.completed)
+    },
+
+    filteredTodos() {
+      if(this.currentFilter === 'active') {
+        return this.activeTodos;
+      }
+
+      if(this.currentFilter === 'completed') {
+        return this.completedTodos
+      }
+
+      return this.todos;
     },
 
     completedTodos() {
@@ -36,6 +50,10 @@ export default {
     clearCompleted() {
       this.todos = this.activeTodos
     },
+
+    filterTodos(filter) {
+      this.currentFilter = filter
+    },
   },
 }
 </script>
@@ -43,6 +61,18 @@ export default {
 <template>
   <div class="h-full grid place-content-center text-center">
     <h1 class="text-3xl font-bold">Vue Todo App</h1>
+
+    <div class="flex gap-3 justify-center mt-5">
+      <button
+        v-for="(filter, index) in filters"
+        :key="index"
+        class="border px-2 text-base capitalize cursor-pointer"
+        @click="filterTodos(filter)"
+      >
+        {{ filter }}
+      </button>
+    </div>
+
     <div class="mt-10">
       <input
         v-model="newTodo"
@@ -56,7 +86,7 @@ export default {
     <section class="mt-10 text-left">
       <ul class="flex flex-col gap-4">
         <li
-          v-for="(todo, index) in todos"
+          v-for="(todo, index) in filteredTodos"
           :key="index"
           class="bg-white rounded-sm py-2 px-3 text-sm text-neutral-800"
         >
